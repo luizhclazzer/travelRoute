@@ -27,7 +27,7 @@ public class TravelRouteApplication extends SpringBootServletInitializer impleme
 			if (args.length > 0) {
 				fileName = args[0];
 			}
-			UtilValidation.validateInput(fileName, "Please enter the CSV file as an application argument");
+			UtilValidation.validateFileNameInput(fileName, "Please enter the CSV file as an application argument");
 			System.out.println(fileName);
 
 		} catch (final Exception e) {
