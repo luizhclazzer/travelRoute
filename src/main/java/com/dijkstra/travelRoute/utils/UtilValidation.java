@@ -44,7 +44,7 @@ public class UtilValidation {
 
     private static void ThrowParamsException() {
 
-        throw new ExecuteException("Please, enter with a valid route.");
+        throw new ExecuteException("Informe uma rota válida de acordo com exemplo.");
 
     }
 

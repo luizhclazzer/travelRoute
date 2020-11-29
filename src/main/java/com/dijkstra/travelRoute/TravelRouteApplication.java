@@ -1,7 +1,9 @@
 package com.dijkstra.travelRoute;
 
+import com.dijkstra.travelRoute.service.RouteService;
 import com.dijkstra.travelRoute.utils.CommandLineOperate;
 import com.dijkstra.travelRoute.utils.UtilValidation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +13,12 @@ import java.util.Scanner;
 
 @SpringBootApplication
 public class TravelRouteApplication extends SpringBootServletInitializer implements CommandLineRunner {
+
+	@Autowired
+	private CommandLineOperate commandLineOperate;
+
+	@Autowired
+	private RouteService routeService;
 
 	private static String fileName;
 
@@ -27,15 +35,16 @@ public class TravelRouteApplication extends SpringBootServletInitializer impleme
 			if (args.length > 0) {
 				fileName = args[0];
 			}
-			UtilValidation.validateFileNameInput(fileName, "Please enter the CSV file as an application argument");
-			System.out.println(fileName);
+			UtilValidation.validateFileNameInput(fileName, "Por favor, informe o caminho do arquivo CSV como parâmetro da aplicação.");
+			routeService.setCsvFile(fileName);
+//			System.out.println(fileName);
 
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 
-		new CommandLineOperate();
+		commandLineOperate.Execute();
 
 	}
 
