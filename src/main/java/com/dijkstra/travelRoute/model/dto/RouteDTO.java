@@ -1,5 +1,6 @@
 package com.dijkstra.travelRoute.model.dto;
 
+
 public class RouteDTO {
 
     private String origin;
@@ -16,10 +17,6 @@ public class RouteDTO {
         this.destination = destination;
         this.cost = cost;
     }
-
-//    public String toCSV() {
-//        return String.format("\n%s,%s,%s", origin, destination, String.valueOf(cost));
-//    }
 
     public String getOrigin() {
         return origin;

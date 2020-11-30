@@ -32,9 +32,8 @@ public class TravelRouteApplication extends SpringBootServletInitializer impleme
 	public void run(String... args) {
 
 		try {
-			if (args.length > 0) {
-				fileName = args[0];
-			}
+			fileName = System.getProperty("param");
+
 			UtilValidation.validateFileNameInput(fileName, "Por favor, informe o caminho do arquivo CSV como parâmetro da aplicação.");
 			routeService.setCsvFile(fileName);
 //			System.out.println(fileName);
@@ -44,7 +43,10 @@ public class TravelRouteApplication extends SpringBootServletInitializer impleme
 			System.exit(1);
 		}
 
-		commandLineOperate.Execute();
+		/*Does not start the command line execution if you are running the tests, so as not to stop the application*/
+		if (UtilValidation.isJUnitTest() == false) {
+			commandLineOperate.Execute();
+		}
 
 	}
 

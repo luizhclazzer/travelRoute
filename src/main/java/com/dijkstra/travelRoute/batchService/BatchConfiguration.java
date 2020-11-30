@@ -50,7 +50,8 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemReader<RouteDTO> reader() {
         FlatFileItemReader<RouteDTO> reader = new FlatFileItemReader<>();
-        reader.setResource(new PathResource(applicationArguments.getNonOptionArgs().get(0)));
+        //reader.setResource(new PathResource(applicationArguments.getNonOptionArgs().get(0)));
+        reader.setResource(new PathResource(System.getProperty("param")));
         reader.setLineMapper(new DefaultLineMapper<RouteDTO>() {
             {
                 setLineTokenizer(new DelimitedLineTokenizer() {
