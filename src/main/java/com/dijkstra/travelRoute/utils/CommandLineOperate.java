@@ -39,7 +39,7 @@ public class CommandLineOperate {
             } catch (ExecuteException ex) {
                 System.out.println(ex.getMessage());
             } catch (Throwable ex) {
-                System.out.println("Entrada inválida.");
+                System.out.println("Entrada invalida.");
             }
         }
 

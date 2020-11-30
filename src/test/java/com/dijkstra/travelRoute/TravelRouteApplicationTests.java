@@ -145,4 +145,11 @@ class TravelRouteApplicationTests {
 		assertThat(cost.asDouble(), is(60.5));
 
 	}
+
+	@Test
+	public void deleteRouteByOriginAndDestinationShouldReturnOk_PTO_BRC() {
+
+		restTemplate.delete("http://localhost:" + port + "/routes/origin/PTO/destination/CDG");
+
+	}
 }

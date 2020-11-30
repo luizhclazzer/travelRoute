@@ -12,11 +12,14 @@ import com.dijkstra.travelRoute.utils.Exceptions.ValidateAddRouteException;
 import com.dijkstra.travelRoute.utils.UtilFile;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +64,9 @@ public class CalculateRouteRestController {
         try {
             Route route = routeService.addRoute(routeDTO);
 
-            String line = route.getOrigin() + UtilFile.CSV_SEPARATOR + route.getDestination() + UtilFile.CSV_SEPARATOR + route.getCost();
+            String line = route.getOrigin().toUpperCase() + UtilFile.CSV_SEPARATOR +
+                    route.getDestination().toUpperCase() + UtilFile.CSV_SEPARATOR +
+                    route.getCost();
             UtilFile.writeLineToCSVFile(line);
 
             URI uri = uriBuilder.path("/routes/{id}").buildAndExpand(route.getId()).toUri();
@@ -83,5 +88,36 @@ public class CalculateRouteRestController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/origin/{origin}/destination/{destination}")
+    public ResponseEntity<?> delete(@PathVariable("origin") String origin,
+                                    @PathVariable("destination") String destination) throws IOException, FileException {
+        Optional<Route> route = routeRepository.findByOriginAndDestination(origin, destination);
+        if (route.isPresent()) {
+            routeRepository.deleteById(route.get().getId());
+
+            writeDataFromDBToCSVFile();
+
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    public void writeDataFromDBToCSVFile() throws FileException, IOException {
+
+        UtilFile.emptyCSVFile();
+
+        List<Route> routes = routeRepository.findAll();
+        routes.forEach(route -> {
+            String line = route.getOrigin() + UtilFile.CSV_SEPARATOR + route.getDestination() + UtilFile.CSV_SEPARATOR + route.getCost();
+            try {
+                UtilFile.writeLineToCSVFile(line);
+            } catch (FileException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 }
