@@ -10,6 +10,8 @@ import com.dijkstra.travelRoute.utils.Exceptions.ExecuteException;
 import com.dijkstra.travelRoute.utils.Exceptions.FileException;
 import com.dijkstra.travelRoute.utils.Exceptions.ValidateAddRouteException;
 import com.dijkstra.travelRoute.utils.UtilFile;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/routes")
+@Api(value="bestRoute", description="Get a best route, add a new a route, get route by Id and Delete routes")
 public class CalculateRouteRestController {
 
     @Autowired
@@ -38,6 +41,7 @@ public class CalculateRouteRestController {
     @Autowired
     RouteRepository routeRepository;
 
+    @ApiOperation(value = "Best route by origin and destination params")
     @GetMapping("/origin/{origin}/destination/{destination}")
     public ResponseEntity<BestRouteDTO> bestRoute(@PathVariable("origin") String origin,
                                                   @PathVariable("destination") String destination) throws ExecuteException {
@@ -57,6 +61,7 @@ public class CalculateRouteRestController {
 
     }
 
+    @ApiOperation(value = "Register a new route")
     @PostMapping
     public ResponseEntity<RouteDTO> addRoute(@RequestBody RouteDTO routeDTO, UriComponentsBuilder uriBuilder)
             throws ValidateAddRouteException, FileException {
@@ -78,6 +83,7 @@ public class CalculateRouteRestController {
 
     }
 
+    @ApiOperation(value = "Get route by Id param")
     @GetMapping("/{id}")
     public ResponseEntity<RouteDTO> routeByID(@PathVariable Long id) {
         Optional<Route> route = routeRepository.findById(id);
@@ -90,10 +96,11 @@ public class CalculateRouteRestController {
         return ResponseEntity.notFound().build();
     }
 
+    @ApiOperation(value = "Delete route by origin and destination params")
     @DeleteMapping("/origin/{origin}/destination/{destination}")
     public ResponseEntity<?> delete(@PathVariable("origin") String origin,
                                     @PathVariable("destination") String destination) throws IOException, FileException {
-        Optional<Route> route = routeRepository.findByOriginAndDestination(origin, destination);
+        Optional<Route> route = routeRepository.findByOriginAndDestination(origin.toUpperCase(), destination.toUpperCase());
         if (route.isPresent()) {
             routeRepository.deleteById(route.get().getId());
 

@@ -23,7 +23,7 @@ public class RouteDTO {
     }
 
     public void setOrigin(String origin) {
-        this.origin = origin;
+        this.origin = origin.toUpperCase();
     }
 
     public String getDestination() {
@@ -31,7 +31,7 @@ public class RouteDTO {
     }
 
     public void setDestination(String destination) {
-        this.destination = destination;
+        this.destination = destination.toUpperCase();
     }
 
     public Double getCost() {
