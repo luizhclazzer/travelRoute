@@ -4,6 +4,9 @@ import com.dijkstra.travelRoute.model.dto.RouteParamsDTO;
 import com.dijkstra.travelRoute.utils.Exceptions.ExecuteException;
 import com.dijkstra.travelRoute.utils.Exceptions.ValidateInputException;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static java.util.Objects.isNull;
@@ -18,6 +21,16 @@ public class UtilValidation {
         if (text == null || text.isEmpty()) {
             throw new ValidateInputException(errorMessage);
         }
+
+        validateFileExists(text);
+    }
+
+    private static void validateFileExists(String text) throws ValidateInputException {
+
+        if (Files.notExists(Paths.get(text))) {
+            throw new ValidateInputException("Falha ao carregar o arquivo. Por favor, confira se o caminho está correto.");
+        }
+
     }
 
     public static RouteParamsDTO validateRouteInput(Scanner in) {
