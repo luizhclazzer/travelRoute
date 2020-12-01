@@ -106,7 +106,7 @@ public class CalculateRouteRestController {
 
             writeDataFromDBToCSVFile();
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();
