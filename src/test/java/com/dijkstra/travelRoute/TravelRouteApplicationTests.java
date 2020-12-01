@@ -83,6 +83,74 @@ class TravelRouteApplicationTests {
 	}
 
 	@Test
+	public void getGivenOriginAndDestinationShouldReturnPathAndCost_GRU_ORL() throws Exception {
+
+		ResponseEntity<String> response
+				= restTemplate.getForEntity("http://localhost:" + port + "/routes/origin/Gru/destination/Orl", String.class);
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(response.getBody());
+
+		JsonNode name = root.path("path");
+		assertThat(name.asText(), is("GRU - BRC - SCL - ORL"));
+
+		JsonNode cost = root.path("cost");
+		assertThat(cost.asDouble(), is(35.0));
+	}
+
+	@Test
+	public void getGivenOriginAndDestinationShouldReturnPathAndCost_PTO_CDG() throws Exception {
+
+		ResponseEntity<String> response
+				= restTemplate.getForEntity("http://localhost:" + port + "/routes/origin/PTO/destination/CDG", String.class);
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(response.getBody());
+
+		JsonNode name = root.path("path");
+		assertThat(name.asText(), is("PTO - SCL - ORL - CDG"));
+
+		JsonNode cost = root.path("cost");
+		assertThat(cost.asDouble(), is(32.0));
+	}
+
+	@Test
+	public void getGivenOriginAndDestinationShouldReturnPathAndCost_CDG_ORL() throws Exception {
+
+		ResponseEntity<String> response
+				= restTemplate.getForEntity("http://localhost:" + port + "/routes/origin/CDG/destination/ORL", String.class);
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(response.getBody());
+
+		JsonNode name = root.path("path");
+		assertThat(name.asText(), is("CDG - SCL - ORL"));
+
+		JsonNode cost = root.path("cost");
+		assertThat(cost.asDouble(), is(100.0));
+	}
+
+	@Test
+	public void getGivenOriginAndDestinationShouldReturnPathAndCost_PTO_GRU() throws Exception {
+
+		ResponseEntity<String> response
+				= restTemplate.getForEntity("http://localhost:" + port + "/routes/origin/PTO/destination/GRU", String.class);
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(response.getBody());
+
+		JsonNode name = root.path("path");
+		assertThat(name.asText(), is("PTO - SCL - ORL - GRU"));
+
+		JsonNode cost = root.path("cost");
+		assertThat(cost.asDouble(), is(57.0));
+	}
+
+	@Test
 	public void getGivenOriginAndDestinationShouldReturnNotFound() throws Exception {
 
 		ResponseEntity<String> response
@@ -149,7 +217,7 @@ class TravelRouteApplicationTests {
 	@Test
 	public void deleteRouteByOriginAndDestinationShouldReturnOk_PTO_BRC() {
 
-		restTemplate.delete("http://localhost:" + port + "/routes/origin/PTO/destination/CDG");
+		restTemplate.delete("http://localhost:" + port + "/routes/origin/PTO/destination/BRC");
 
 	}
 }
