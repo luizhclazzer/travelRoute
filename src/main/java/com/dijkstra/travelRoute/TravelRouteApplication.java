@@ -34,11 +34,10 @@ public class TravelRouteApplication extends SpringBootServletInitializer impleme
 	public void run(String... args) {
 
 		try {
-			fileName = System.getProperty("param");
+			fileName = UtilValidation.getCSVFileName();
 
 			UtilValidation.validateFileNameInput(fileName, "Por favor, informe o caminho do arquivo CSV como parâmetro da aplicação.");
 			routeService.setCsvFile(fileName);
-//			System.out.println(fileName);
 
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());

@@ -17,12 +17,25 @@ public class UtilValidation {
     private UtilValidation() {
     }
 
+    public static boolean isJUnitTest() {
+
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if (element.getClassName().startsWith("org.junit.")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static void validateFileNameInput(String text, String errorMessage) throws ValidateInputException {
         if (text == null || text.isEmpty()) {
             throw new ValidateInputException(errorMessage);
         }
 
-        validateFileExists(text);
+        if (isJUnitTest() == false) {
+            validateFileExists(text);
+        }
     }
 
     private static void validateFileExists(String text) throws ValidateInputException {
@@ -61,13 +74,17 @@ public class UtilValidation {
 
     }
 
-    public static boolean isJUnitTest() {
-        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
-            if (element.getClassName().startsWith("org.junit.")) {
-                return true;
-            }
+    public static String getCSVFileName() {
+
+        String fileName;
+
+        if (UtilValidation.isJUnitTest()) {
+            fileName = "routes.csv";
+        } else {
+            fileName = System.getProperty("param");
         }
-        return false;
+
+        return fileName;
     }
 
 }

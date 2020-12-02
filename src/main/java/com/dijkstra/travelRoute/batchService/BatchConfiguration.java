@@ -5,6 +5,7 @@
 package com.dijkstra.travelRoute.batchService;
 
 import com.dijkstra.travelRoute.model.dto.RouteDTO;
+import com.dijkstra.travelRoute.utils.UtilValidation;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -51,7 +52,11 @@ public class BatchConfiguration {
     public FlatFileItemReader<RouteDTO> reader() {
         FlatFileItemReader<RouteDTO> reader = new FlatFileItemReader<>();
         //reader.setResource(new PathResource(applicationArguments.getNonOptionArgs().get(0)));
-        reader.setResource(new PathResource(System.getProperty("param")));
+        if (UtilValidation.isJUnitTest()) {
+            reader.setResource(new ClassPathResource("routes.csv"));
+        } else {
+            reader.setResource(new PathResource(System.getProperty("param")));
+        }
         reader.setLineMapper(new DefaultLineMapper<RouteDTO>() {
             {
                 setLineTokenizer(new DelimitedLineTokenizer() {
