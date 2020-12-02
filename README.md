@@ -1,9 +1,18 @@
 # Rota de Viagem #
-
 Um turista deseja viajar pelo mundo pagando o menor preço possível independentemente do número de conexões necessárias. Vamos construir um programa que facilite ao nosso turista, escolher a melhor rota para sua viagem.
 
 Para isso precisamos inserir as rotas através de um arquivo de entrada.
 
+# Input Example # 
+```shell
+GRU,BRC,10
+BRC,SCL,5
+GRU,CDG,75
+GRU,SCL,20
+GRU,ORL,56
+ORL,CDG,5
+SCL,ORL,20
+```
 # Build #
 É necessário ter o Java [15.0.1](https://www.oracle.com/java/technologies/javase-jdk15-downloads.html) instalado no Windows ou Linux.
 ## Linha de comando ##
