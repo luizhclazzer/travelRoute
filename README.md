@@ -9,12 +9,10 @@ Para isso precisamos inserir as rotas através de um arquivo de entrada.
 ## Linha de comando ##
 * Navegar para a pasta raíz do repositório e executar via shell:
 ```shell
-$ mvn package -Dmaven.test.skip=true
+$ mvn package
 ```
 ## Pela IDE ##
-No menu do Maven >> Maven Settings >> Runner, se certificar de que a opção Skip Tests está marcada. Feito isso, executar duplo click em package.
-O parâmetro skip tests é necessário para evitar problemas com a tela que aguarda um input do usuário para prosseguir, e ainda, a falta do argumento do nome de arquivo ao gerar a package. Ambas as situações podem travar o processo de build.
-
+No menu do Maven >> Travel Route >> Lifecycle e executar duplo click em package.
 ### Execução do sistema ###
 Windows:
 ```shell
