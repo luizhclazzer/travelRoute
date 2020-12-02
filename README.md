@@ -82,11 +82,6 @@ Todos os endpoint's, bem como a possibilidade de sua execução estão disponív
 ## Testes unitários ##
 Os testes foram escritos com o JUnit e estão disponíveis em src\test\java\com.dijkstra.travelRoute.
 São baseados nos dados que estão no arquivo src\main\resources\routes.csv.
-Antes de executar os testes via IDE, deve-se configurar o caminho do arquivo na VM Options. 
-No IntelliJ essa opção é encontrada em: Run > Edit Configurations > JUnit. Deve-se selecionar o nome da classe de testes e adicionar em VM Options:
-```json
--Dparam=C:\routes\routes.csv
-```
 ## Banco de dados ##
 As informações armazenadas em memória no H2 podem ser consultadas através do console: `http://localhost:8080/h2-console/`.
 ## Frameworks ##
