@@ -1,4 +1,4 @@
-# Rota de Viagem #
+# Exercício: Rota de Viagem #
 Um turista deseja viajar pelo mundo pagando o menor preço possível independentemente do número de conexões necessárias. Vamos construir um programa que facilite ao nosso turista, escolher a melhor rota para sua viagem.
 
 Para isso precisamos inserir as rotas através de um arquivo de entrada.
@@ -99,6 +99,3 @@ Os frameworks Spring listados abaixo foram utilizados com o intuito de disponibi
 * SpringWeb (Api Rest)
 * SpringJpa (Base de dados em memória H2)
 * SpringBatch (Carregamento do arquivo CSV de entrada e armazenamento na base)
-## Referências ##
-* https://www.baeldung.com/java-dijkstra
-* https://www.youtube.com/watch?v=ovkITlgyJ2s
